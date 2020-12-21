@@ -1,0 +1,3 @@
+[submodule "penguinparty.eth-Deliverables"]
+	path = penguinparty.eth-Deliverables
+	url = git@github.com:penguinparty-eth/penguinparty.eth-Deliverables.git
