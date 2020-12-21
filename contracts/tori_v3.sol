@@ -1,1 +1,1 @@
-../penguinparty.eth-Deliverables/SolidityContracts/tori_v3.sol
+../penguinparty.eth-Deliverables/SolidityContracts/Tori/tori_v3.sol

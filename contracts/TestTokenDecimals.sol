@@ -3,7 +3,7 @@
 pragma solidity ^0.6.0;
 
 
-
+import "hardhat/console.sol";
 
 
 /*
@@ -465,7 +465,8 @@ contract TestTokenDecimals is Context, IERC20, Ownable {
      */
     function transferFrom(address sender, address recipient, uint256 amount) public virtual override returns (bool) {
         _transfer(sender, recipient, amount);
-        _approve(sender, _msgSender(), _allowances[sender][_msgSender()].sub(amount, "ERC20: transfer amount exceeds allowance"));
+        console.log("Allowance", _allowances[sender][_msgSender()], "amount", amount);
+        _approve(sender, _msgSender(), _allowances[sender][_msgSender()].sub(amount, "ERC20: transfer amount exceeds allowance "));
         return true;
     }
 
