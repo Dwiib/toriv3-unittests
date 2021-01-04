@@ -47,21 +47,21 @@ async function setup(log = false) {
     const myToriV3 = toriv3.connect(ret.superAccount)
     await myToriV3.setFee("10", "1000");
     await myToriV3.setWrapFee("10", "1000");
-    await myToriV3.setFeeTarget(ret.superAccount.address);
+    await myToriV3.setFeeTarget("0x0000000000000000000000000000000000000001");
     await myToriV3.updateRate("20000000000000000");
     ret.toriv3 = toriv3;
     for (var i = 0; i <= 18; i++) {
         for(const char of ["A", "B"]) { 
             const Token1 = await (await hre.ethers.getContractFactory("contracts/commonWealth-TokenStandard.sol:CommonWealth")).connect(ret.superAccount);
-            const decimals = 18-i;
+            const decimals = i;
             const symbol = char + " " + decimals;
             const name = "Test 1 " + symbol;
-            var token1 = await Token1.deploy(name, symbol);;
+            var token1 = await Token1.deploy(name, symbol, decimals);
             await token1.deployed();
             await token1.setFee("10", "1000")
-            await token1.setFeeTarget(ret.superAccount.address);
+            await token1.setFeeTarget("0x0000000000000000000000000000000000000001");
 
-            await myToriV3.arrayAdd(token1.address, "1000000000000000000");
+            await myToriV3.arrayAdd(token1.address, BigNumber.from(10).pow(decimals));
             ret.tokens[18 - i].push(token1);
         }
     }
@@ -82,7 +82,7 @@ async function setup(log = false) {
             var name = await tok.name();
             logger("Deployed token named: " + name);
             for (const account of accounts) {
-                await tok.mint(account.address, 1000);
+                await tok.mint(account.address, BigNumber.from(1000).mul(BigNumber.from(10).pow(await tok._decimals())));
                 const bal = await tok.balanceOf(account.address);
                 logger("Minted " + bal + " to " + account.address);
             }

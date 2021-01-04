@@ -21,7 +21,6 @@ describe("ToriV3", function () {
                     const feeDivisor = await toriv3._feedivisor();
                     const wrapFee = await toriv3._wrapfee();
                     const wrapFeeDivisor = await toriv3._wrapfeedivisor();
-
                     const wrapMinusFee = bal.sub(bal.mul(fee).div(feeDivisor));
                     const unwrapMinusFee = wrapMinusFee.sub(wrapMinusFee.mul(wrapFee).div(wrapFeeDivisor));
                     const currentBal = await tok.balanceOf(account.address);
